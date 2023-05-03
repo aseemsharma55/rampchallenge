@@ -18,6 +18,24 @@ export function App() {
     () => paginatedTransactions?.data ?? transactionsByEmployee ?? null,
     [paginatedTransactions, transactionsByEmployee]
   )
+//   const transactions = useMemo(
+//   () => {
+//     if (!paginatedTransactions?.data) {
+//       return transactionsByEmployee;
+//     }
+
+//     const allTransactions =
+//       paginatedTransactions.data?.length > 0
+//         ? paginatedTransactions.data.reduce((acc, page) => [...acc, ...page.transactions], [])
+//         : [];
+
+//     return transactionsByEmployee
+//       ? [...allTransactions, ...transactionsByEmployee]
+//       : allTransactions;
+//   },
+//   [paginatedTransactions?.data, transactionsByEmployee]
+// );
+
 
   const loadAllTransactions = useCallback(async () => {
     setIsLoading(true)
@@ -25,6 +43,7 @@ export function App() {
 
     await employeeUtils.fetchAll()
     await paginatedTransactionsUtils.fetchAll()
+    // await transactionsByEmployeeUtils.invalidateData()
 
     setIsLoading(false)
   }, [employeeUtils, paginatedTransactionsUtils, transactionsByEmployeeUtils])
